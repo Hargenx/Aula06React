@@ -1,20 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, Button } from 'react-native';
+import FlatListExemplo from './exemplos/FlatListExemplo';
+import SectionListExemplo from './exemplos/SectionListExemplo';
+import ScrollViewExemplo from './exemplos/ScrollViewExemplo';
+import CarouselExemplo from './exemplos/CarouselExemplo';
+import FlatList2Exemplo from './exemplos/FlatListExemplo2';
+import styles from './style/style';
 
 export default function App() {
+  const [currentScreen, setCurrentScreen] = useState(null);
+
+  const navigateToScreen = (screenName) => {
+    setCurrentScreen(screenName);
+  };
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'FlatList':
+        return <FlatListExemplo goBack={() => setCurrentScreen(null)} />;
+      case 'SectionList':
+        return <SectionListExemplo goBack={() => setCurrentScreen(null)} />;
+      case 'ScrollView':
+        return <ScrollViewExemplo goBack={() => setCurrentScreen(null)} />;
+      case 'Carousel':
+        return <CarouselExemplo goBack={() => setCurrentScreen(null)} />;
+      case 'FlatList2':
+        return <FlatList2Exemplo goBack={() => setCurrentScreen(null)} />;
+      default:
+        return (
+          <View style={styles.container}>
+            <Button title="FlatList Exemplo" onPress={() => navigateToScreen('FlatList')} />
+            <View style={styles.buttonSpacing} />
+            <Button title="SectionList Exemplo" onPress={() => navigateToScreen('SectionList')} />
+            <View style={styles.buttonSpacing} />
+            <Button title="ScrollView Exemplo" onPress={() => navigateToScreen('ScrollView')} />
+            <View style={styles.buttonSpacing} />
+            <Button title="Carousel Exemplo" onPress={() => navigateToScreen('Carousel')} />
+            <View style={styles.buttonSpacing} />
+            <Button title="FlatLista2 Exemplo" onPress={() => navigateToScreen('FlatList2')} />
+          </View>
+        );
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {renderScreen()}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
